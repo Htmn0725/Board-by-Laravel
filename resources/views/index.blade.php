@@ -7,23 +7,23 @@
 </head>
 <body>
 <h1>ひとり言掲示板</h1>
-<?php if (!empty($success_message)): ?>
+@if (!empty($success_message))
 	<p class="success_message"><?php echo $success_message; ?></p>
-<?php endif; ?>
-<?php if (!empty($error_message)): ?>
+@endif
+@if (!empty($error_message))
 	<ul class="error_message">
-	  <?php foreach ($error_message as $value): ?>
+	  @foreach ($error_message as $value)
 		<li>・<?php echo $value; ?></li>
-	  <?php endforeach; ?>
+	  @endforeach
 	</ul>
-<?php endif; ?>
+@endif
 <form method="post">
   <div>
     <label for="view_name">name</label>
-	<input id="view_name" type="text" name="view_name" value="<?php
-    if (!empty($_SESSION['view_name'])) {
+	<input id="view_name" type="text" name="view_name" value="
+    @if (!empty($_SESSION['view_name'])) {
         echo $_SESSION['view_name'];
-    } ?>">
+    }">
   </div>
   <div>
     <label for="message">message</label>
@@ -33,22 +33,21 @@
 </form>
 <hr>
 <section>
-<?php if (!empty($message_array)): ?>
-<?php foreach ($message_array as $value):?>
+@if (!empty($message_array))
+@foreach ($message_array as $value)
 <article>
 	<div class="info">
 		<h2><?php echo $value['view_name']; ?></h2>
 		<time><?php echo date('Y年m月d日　H:i',
         strtotime($value['post_date'])); ?></time>
 		<p>
-      <button type="submit" onclick="location.href='edit.php'" name="id" value="<?php echo $value['id']; ?>">edit</a>
-    <!-- <a href="edit.php?message_id=<?php echo $value['id']; ?>">edit</a> -->
-		<!-- <a href="delete.php?message_id=<?php echo $value['id']; ?>">delete</a> --></p>
+        <a href="{{ url('/edit')}}">edit</a>
+        <a href="{{ url('/delete')}}">delete</a></p>
 	</div>
 	<p><?php echo nl2br($value['message']); ?></p>
 </article>
-<?php endforeach; ?>
-<?php endif; ?>
+@endforeach
+@endif
 </section>
 </body>
 </html>

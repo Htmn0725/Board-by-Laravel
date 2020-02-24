@@ -16,7 +16,4 @@
     return view('welcome');
 });*/
 
-Route::get('/',function(){
-    //return view('/', 'MessageController@index');
-    return view('index');
-});
+Route::resource('/index', 'MessageController@index');
