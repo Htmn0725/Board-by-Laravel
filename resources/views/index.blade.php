@@ -23,7 +23,7 @@
 	<input id="view_name" type="text" name="view_name" value="
     @if (!empty($_SESSION['view_name'])) {
         echo $_SESSION['view_name'];
-    }">
+    @endif">
   </div>
   <div>
     <label for="message">message</label>

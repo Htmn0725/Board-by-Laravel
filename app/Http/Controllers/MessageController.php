@@ -11,14 +11,8 @@ class MessageController extends Controller
     public function index()
     {
         // DBよりmessageテーブルの値を全て取得する
-        $message_array = message::all()->toAllay();
+        $message_array = message::all();
 
         return view('index',compact('message_array'));
     }
-
-    public function edit($id)
-    {
-        # code...
-    }
-
 }
