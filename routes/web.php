@@ -17,3 +17,5 @@
 });*/
 
 Route::resource('/', 'MessageController');
+
+Route::resource('Post', 'MessageController',['only' => ['store']]);

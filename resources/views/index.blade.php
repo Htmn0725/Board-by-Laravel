@@ -7,8 +7,8 @@
 </head>
 <body>
 <h1>ひとり言掲示板</h1>
-@if (!empty($success_message))
-	<p class="success_message"><?php echo $success_message; ?></p>
+@if (session('flash_message'))
+	<p class="success_message">{{ session('flash_message') }}</p>
 @endif
 @if (!empty($error_message))
 	<ul class="error_message">
@@ -18,6 +18,7 @@
 	</ul>
 @endif
 <form method="post">
+    @csrf
   <div>
     <label for="view_name">name</label>
 	<input id="view_name" type="text" name="view_name" value="
@@ -39,7 +40,7 @@
 	<div class="info">
 		<h2><?php echo $value['view_name']; ?></h2>
 		<time><?php echo date('Y年m月d日　H:i',
-        strtotime($value['post_date'])); ?></time>
+        strtotime($value['created_at'])); ?></time>
 		<p>
         <a href="{{ url('/edit')}}">edit</a>
         <a href="{{ url('/delete')}}">delete</a></p>
