@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>ひとり言掲示板</title>
-<link href="./create-a-board.css" rel="stylesheet">
+<link href="{{ asset('create-a-board.css') }}" rel="stylesheet">
 </head>
 <body>
 <h1>ひとり言掲示板</h1>
@@ -13,11 +13,11 @@
 @if (!empty($error_message))
 	<ul class="error_message">
 	  @foreach ($error_message as $value)
-		<li>・<?php echo $value; ?></li>
+		<li>・{{$value}}</li>
 	  @endforeach
 	</ul>
 @endif
-<form method="post">
+<form method="POST">
     @csrf
   <div>
     <label for="view_name">name</label>
@@ -36,13 +36,21 @@
 <article>
 	<div class="info">
 		<h2>{{$value->view_name}}</h2>
-		<time><?php echo date('Y年m月d日　H:i',
-        strtotime($value['created_at'])); ?></time>
-		<p>
-        <a href="{{ action('MessageController@edit', $value->id) }}">edit</a>
-        <a href="{{ url('/delete')}}">delete</a></p>
-	</div>
-	<p>{{nl2br($value->message)}}</p>
+		<time>{{ $value->created_at->format('Y月m日d h:i') }}</time>
+		<p><form method="GET" action="{{ action('MessageController@edit', $value->id)}}">
+                @csrf
+                <input type="submit" value="edit">
+            </form>
+            <form　method="POST" action="{{ action('MessageController@destroy', $value->id)}}" style="margin-left:5px">
+                @csrf
+                @method('DELETE')
+            <input type="submit" value="delete" onclick="deletePost(this);" >
+            </form></p>
+    </div>
+    <div>
+        <p>{!! nl2br(e($value->message)) !!}</p>
+    </div>
+
 </article>
 @endforeach
 @else
@@ -50,4 +58,17 @@
 @endif
 </section>
 </body>
+<script>
+    <!--
+    /************************************
+     確認メッセージ
+    *************************************/
+    //-->
+    function deletePost(e) {
+      'use strict';
+      if (confirm('本当に削除しますか?')) {
+      document.getElementById('info' + e.dataset.id).submit();
+      }
+    }
+    </script>
 </html>

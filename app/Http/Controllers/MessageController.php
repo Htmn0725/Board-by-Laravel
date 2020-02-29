@@ -36,10 +36,20 @@ class MessageController extends Controller
 
     public function update($post_id, Request $request)
     {
-        $post = message::findOrFail($post_id);
-        $post->fill($request)->save();
+        $message = message::findOrFail($post_id);
+        $message->message = $request->message;
+        $message->save();
 
-        return redirect()->route('index');
+        return redirect('/')->with('flash_message', '投稿を編集しました');
 
+    }
+
+    public function destroy($post_id)
+    {
+        $message= message::findOrFail($post_id);
+        $message->delete();
+
+        return redirect('/')->with('flash_message', '投稿を削除しました
+        ');
     }
 }

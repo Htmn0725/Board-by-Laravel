@@ -11,9 +11,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// index
 Route::resource('/', 'MessageController');
 
-Route::resource('Post', 'MessageController',['only' => ['store','update']]);
+Route::resource('Post', 'MessageController',['only' => ['store']]);
 
-Route::get('/edit/{id}', 'MessageController@edit');
+// edit
+Route::get('/{id}/edit', 'MessageController@edit');
+
+Route::post('/{id}/edit', 'MessageController@update');
+
+Route::delete('/{id}', 'MessageController@destroy');

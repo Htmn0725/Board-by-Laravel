@@ -1,7 +1,7 @@
 
 /*------------------------------
  Reset Style
- 
+
 ------------------------------*/
 html, body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -170,6 +170,8 @@ button:hover {
     background-color: #2392d8;
 }
 
+
+
 hr {
 	margin: 20px 0;
 	padding: 0;
@@ -247,7 +249,8 @@ article.reply::before {
     border-bottom: 10px solid #fff;
 }
 	.info {
-		margin-bottom: 10px;
+        margin-bottom: 10px;
+        display: flex;
 	}
 	.info h2 {
 		display: inline-block;
@@ -259,7 +262,8 @@ article.reply::before {
 	.info time {
 		color: #999;
 		line-height: 1.6em;
-		font-size: 72%;
+        font-size: 72%;
+        margin-right: 5px;
     }
     .info p {
         display: inline-block;
