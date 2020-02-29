@@ -21,10 +21,7 @@
     @csrf
   <div>
     <label for="view_name">name</label>
-	<input id="view_name" type="text" name="view_name" value="
-    @if (!empty($_SESSION['view_name'])) {
-        echo $_SESSION['view_name'];
-    @endif">
+	<input id="view_name" type="text" name="view_name">
   </div>
   <div>
     <label for="message">message</label>
@@ -38,16 +35,18 @@
 @foreach ($message_array as $value)
 <article>
 	<div class="info">
-		<h2><?php echo $value['view_name']; ?></h2>
+		<h2>{{$value->view_name}}</h2>
 		<time><?php echo date('Y年m月d日　H:i',
         strtotime($value['created_at'])); ?></time>
 		<p>
-        <a href="{{ url('/edit')}}">edit</a>
+        <a href="{{ action('MessageController@edit', $value->id) }}">edit</a>
         <a href="{{ url('/delete')}}">delete</a></p>
 	</div>
-	<p><?php echo nl2br($value['message']); ?></p>
+	<p>{{nl2br($value->message)}}</p>
 </article>
 @endforeach
+@else
+<p>投稿はまだありません</p>
 @endif
 </section>
 </body>

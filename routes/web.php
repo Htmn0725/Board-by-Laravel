@@ -12,10 +12,8 @@
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
-
 Route::resource('/', 'MessageController');
 
-Route::resource('Post', 'MessageController',['only' => ['store']]);
+Route::resource('Post', 'MessageController',['only' => ['store','update']]);
+
+Route::get('/edit/{id}', 'MessageController@edit');

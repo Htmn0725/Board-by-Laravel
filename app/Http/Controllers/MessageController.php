@@ -25,4 +25,21 @@ class MessageController extends Controller
 
         return redirect('/')->with('flash_message', '投稿が完了しました');
     }
+
+    public function edit($post_id)
+    {
+        $post = message::findOrFail($post_id);
+
+        return view('edit',['post' => $post,
+        ]);
+    }
+
+    public function update($post_id, Request $request)
+    {
+        $post = message::findOrFail($post_id);
+        $post->fill($request)->save();
+
+        return redirect()->route('index');
+
+    }
 }
