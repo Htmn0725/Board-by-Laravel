@@ -24,8 +24,8 @@ class MessageController extends Controller
         ]);
 
         $message = new Message;
-        $message->view_name = $validatedRequest->view_name;
-        $message->message = $validatedRequest->message;
+        $message->view_name = $request->view_name;
+        $message->message = $request->message;
         $message->save();
 
         return redirect('/')->with('flash_message', '投稿が完了しました');
@@ -42,11 +42,12 @@ class MessageController extends Controller
     public function update($post_id, Request $request)
     {
         $validatedRequest = $request->validate([
+            'view_name' => 'required|max:100',
             'message' => 'required|max:100',
         ]);
 
         $message = message::findOrFail($post_id);
-        $message->message = $validatedRequest->message;
+        $message->message = $request->message;
         $message->save();
 
         return redirect('/')->with('flash_message', '投稿を編集しました');
