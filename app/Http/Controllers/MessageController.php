@@ -18,9 +18,14 @@ class MessageController extends Controller
 
     public function store(Request $request)
     {
+        $validatedRequest = $request->validate([
+            'view_name' => 'required|max:100',
+            'message' => 'required|max:100',
+        ]);
+
         $message = new Message;
-        $message->view_name = $request->view_name;
-        $message->message = $request->message;
+        $message->view_name = $validatedRequest->view_name;
+        $message->message = $validatedRequest->message;
         $message->save();
 
         return redirect('/')->with('flash_message', '投稿が完了しました');
@@ -36,8 +41,12 @@ class MessageController extends Controller
 
     public function update($post_id, Request $request)
     {
+        $validatedRequest = $request->validate([
+            'message' => 'required|max:100',
+        ]);
+
         $message = message::findOrFail($post_id);
-        $message->message = $request->message;
+        $message->message = $validatedRequest->message;
         $message->save();
 
         return redirect('/')->with('flash_message', '投稿を編集しました');

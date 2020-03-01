@@ -10,10 +10,10 @@
 @if (session('flash_message'))
 	<p class="success_message">{{ session('flash_message') }}</p>
 @endif
-@if (!empty($error_message))
+@if ($errors->any())
 	<ul class="error_message">
-	  @foreach ($error_message as $value)
-		<li>・{{$value}}</li>
+	  @foreach ($errors->all() as $error)
+		<li>・{{$error}}</li>
 	  @endforeach
 	</ul>
 @endif
