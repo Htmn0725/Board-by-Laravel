@@ -41,7 +41,7 @@
                 @csrf
                 <input type="submit" value="edit">
             </form>
-            <form　method="POST" action="{{ action('MessageController@destroy', $value->id)}}" style="margin-left:5px">
+        <form id="form_{{ $value->id }}"　method="POST" action="{{ action('MessageController@destroy', $value->id)}}" style="margin-left:5px">
                 @csrf
                 @method('DELETE')
             <input type="submit" value="delete" onclick="deletePost(this);" >
@@ -67,7 +67,7 @@
     function deletePost(e) {
       'use strict';
       if (confirm('本当に削除しますか?')) {
-      document.getElementById('info' + e.dataset.id).submit();
+      document.getElementById('info_' + e.dataset.id).submit();
       }
     }
     </script>

@@ -21,4 +21,4 @@ Route::get('/{id}/edit', 'MessageController@edit');
 
 Route::post('/{id}/edit', 'MessageController@update');
 
-Route::delete('/{id}', 'MessageController@destroy');
+Route::get('/destroy/{id}', 'MessageController@destroy');
