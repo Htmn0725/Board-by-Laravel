@@ -26,9 +26,42 @@ class MessageController extends Controller
         $message = new Message;
         $message->view_name = $request->view_name;
         $message->message = $request->message;
+        // imeage file
+        if( !empty($request->image_file) )
+        {
+            // validation
+            $this->validate($request, [
+                'image_file' => [
+                    // アップロードされたファイルであること
+                    'file',
+                    // 画像ファイルであること
+                    'image',
+                    // MIMEタイプを指定
+                    'mimes:jpeg,png',
+                ]
+            ]);
+
+            // get file name
+            $fileNameWithExt = $request->file('image_file')->getClientOriginalName();
+
+            // get just the file name
+            $filename = pathinfo($fileNameWithExt,PATHINFO_FILENAME);
+
+            // get extension
+            $extension = $request->file('image_file')->getClientOriginalExtension();
+
+            // create new file
+            $filenameToStore = $filename.'_'.time().'.'.$extension;
+
+            // Store to Storage
+            $path =$request->file('image_file')->storeAs('public/image',$filenameToStore);
+
+            $message->image_file_name = $filenameToStore;
+            $message->file_path = $path;
+        }
         $message->save();
 
-        return redirect('/')->with('flash_message', '投稿が完了しました');
+        return redirect('/index')->with('flash_message', '投稿が完了しました');
     }
 
     public function edit($post_id)
@@ -50,7 +83,7 @@ class MessageController extends Controller
         $message->message = $request->message;
         $message->save();
 
-        return redirect('/')->with('flash_message', '投稿を編集しました');
+        return redirect('/index')->with('flash_message', '投稿を編集しました');
 
     }
 
@@ -59,7 +92,14 @@ class MessageController extends Controller
         $message= message::findOrFail($post_id);
         $message->delete();
 
-        return redirect('/')->with('flash_message', '投稿を削除しました
+        return redirect('/index')->with('flash_message', '投稿を削除しました
         ');
+    }
+
+    public function show($post_id)
+    {
+        $post = message::findOrFail($post_id);
+        
+        return view('show',compact('post'));
     }
 }

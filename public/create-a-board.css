@@ -136,6 +136,7 @@ label {
 }
 
 input[type="text"],
+input[type="file"],
 textarea {
 	margin-bottom: 20px;
 	padding: 10px;
@@ -148,7 +149,8 @@ textarea {
 input[type="text"] {
 	width: 200px;
 }
-textarea {
+textarea,
+input[type="file"] {
 	width: 50%;
 	max-width: 50%;
 	height: 70px;
@@ -169,8 +171,6 @@ input[type=submit]:hover,
 button:hover {
     background-color: #2392d8;
 }
-
-
 
 hr {
 	margin: 20px 0;
