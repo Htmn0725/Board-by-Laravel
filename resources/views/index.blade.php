@@ -55,7 +55,7 @@
     </div>
     @if( !empty($value->image_file_name))
     <div>
-      <img src="{{ asset('storage/image/' . $value->image_file_name ) }}" width="200" height="130">
+      <img src="data:image/png;base64,{{ $value->file_path }}"　alt="image" width="200" height="130">
     </div>
     @endif
     <br/>

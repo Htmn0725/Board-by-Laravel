@@ -43,21 +43,10 @@ class MessageController extends Controller
 
             // get file name
             $fileNameWithExt = $request->file('image_file')->getClientOriginalName();
+            $image = base64_encode(file_get_contents($request->image_file));
 
-            // get just the file name
-            $filename = pathinfo($fileNameWithExt,PATHINFO_FILENAME);
-
-            // get extension
-            $extension = $request->file('image_file')->getClientOriginalExtension();
-
-            // create new file
-            $filenameToStore = $filename.'_'.time().'.'.$extension;
-
-            // Store to Storage
-            $path =$request->file('image_file')->storeAs('public/image',$filenameToStore);
-
-            $message->image_file_name = $filenameToStore;
-            $message->file_path = $path;
+            $message->image_file_name = $fileNameWithExt;
+            $message->file_path = $image;
         }
         $message->save();
 
